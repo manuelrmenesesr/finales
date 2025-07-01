@@ -1,10 +1,11 @@
 ```mermaid
 ---
-title: Entity Realtion
+title: Entity Relation
 ---
 erDiagram
     transactions ||--o{ transaction_allocations : links
-    categories ||--o{ transactions : has
+    subcategories ||--o{ transactions : uses
+    subcategories ||--|| categories : belongs_to
     currencies ||--o{ transactions : has
     movement_entries ||--|{ transaction_allocations : originates_from
     movement_entries ||--|| movement_foreign_origins : has
@@ -13,22 +14,22 @@ erDiagram
     currencies ||--o{ transaction_sources : has
 
     transactions {
-        int id
+        uuid id
         string description
         decimal amount
+        subcategories subcategory_id
         currencies currency_id
-        categories category_id
         timestamp occurred_at
     }
     movement_entries {
-        int id
+        uuid id
         string name
         decimal amount
         transaction_sources transaction_source_id
         timestamp occurred_at
     }
     movement_foreign_origins {
-        int id
+        uuid id
         movement_entries movement_entry_id
         decimal foreign_amount
         currencies foreign_currency_id
@@ -38,16 +39,21 @@ erDiagram
         movement_entries movement_entry_id
     }
     categories {
-        int id
+        uuid id
         string name
     }
+    subcategories {
+        uuid id
+        string name
+        categories category_id
+    }
     currencies {
-        int id
+        uuid id
         string code
         string name
     }
     transaction_sources {
-        int id
+        uuid id
         string entity
         string name
         string identifier
