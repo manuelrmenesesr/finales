@@ -19,14 +19,13 @@ erDiagram
         decimal amount
         subcategories subcategory_id
         currencies currency_id
-        timestamp occurred_at
     }
     movement_entries {
         uuid id
         string name
         decimal amount
         transaction_sources transaction_source_id
-        timestamp occurred_at
+        timestamptz occurred_at
     }
     movement_foreign_origins {
         uuid id
