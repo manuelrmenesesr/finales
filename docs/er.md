@@ -26,6 +26,7 @@ erDiagram
         decimal amount
         transaction_sources transaction_source_id
         timestamptz occurred_at
+        date reflected_date
     }
     movement_foreign_origins {
         uuid id
