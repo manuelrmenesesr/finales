@@ -15,57 +15,58 @@ erDiagram
     transaction_sources }|--|| currencies : defaults_to
 
     transactions {
-        uuid id
-        text description
-        decimal amount
-        subcategories subcategory_id
-        currencies currency_id
+        uuid id PK
+        text description "Not null"
+        decimal amount "Not null"
+        subcategories subcategory_id FK "Not null"
+        currencies currency_id FK "Not null"
     }
     movement_entries {
-        uuid id
-        text name
-        decimal amount
-        transaction_sources transaction_source_id
-        timestamptz occurred_at
-        date reflected_date
+        uuid id PK
+        text name "Nullable"
+        decimal amount "Not null"
+        transaction_sources transaction_source_id FK "Not null"
+        timestamptz occurred_at "Nullable"
+        date reflected_date "Nullable"
     }
     movement_foreign_origins {
-        uuid id
-        movement_entries movement_entry_id
-        decimal foreign_amount
-        currencies foreign_currency_id
+        uuid id PK
+        movement_entries movement_entry_id FK "Not null"
+        currencies foreign_currency_id FK "Not null"
+        decimal foreign_amount "Not null"
     }
     transaction_allocations {
-        transactions transaction_id
-        movement_entries movement_entry_id
+        transactions transaction_id PK, FK "Not null"
+        movement_entries movement_entry_id PK, FK "Not null"
     }
     categories {
-        uuid id
-        text name
+        uuid id PK
+        text name UK "Not null"
     }
     subcategories {
-        uuid id
-        text name
-        categories category_id
-        budget budget_id
+        uuid id PK
+        text name "Not null"
+        categories category_id FK "Not null"
+        budget budget_id FK "Nullable"
     }
     budget {
-        uuid id
-        text name
-        decimal percentage
+        uuid id PK
+        text name "Not null"
+        decimal percentage "Not null"
+        enum period "Not null | ['monthly', 'annual']"
     }
     currencies {
-        uuid id
-        text code
-        text name
+        uuid id PK
+        text code UK
+        text name UK
     }
     transaction_sources {
-        uuid id
-        text entity
-        text name
-        text identifier
-        currencies default_currency_id
-        date valid_from
-        date valid_to
+        uuid id PK
+        text entity FK "Nullable"
+        text name "Not null"
+        text identifier "Nullable"
+        currencies default_currency_id FK "Not null"
+        date valid_from "Not null"
+        date valid_to "Nullable"
     }
 ```
