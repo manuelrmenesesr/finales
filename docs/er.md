@@ -19,7 +19,6 @@ erDiagram
         text description "Not null"
         decimal amount "Not null"
         subcategories subcategory_id FK "Not null"
-        currencies currency_id FK "Not null"
     }
     movement_entries {
         uuid id PK
